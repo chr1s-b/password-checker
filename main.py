@@ -85,6 +85,37 @@ def generatePassword():
     print("Password strength: STRONG ({})".format(p))
     return
 
+# custom exception
+class InIdle(Exception):
+    def __init__(self):
+        super().__init__()
+
+#ascii art
+asciiart = """\
+  ___                              _    ___                       _           
+ | _ \__ _ _______ __ _____ _ _ __| |  / __|___ _ _  ___ _ _ __ _| |_ ___ _ _ 
+ |  _/ _` (_-<_-< V  V / _ \ '_/ _` | | (_ / -_) ' \/ -_) '_/ _` |  _/ _ \ '_|
+ |_| \__,_/__/__/\_/\_/\___/_| \__,_|  \___\___|_||_\___|_| \__,_|\__\___/_|  
+  _            ___ _        _      ___                                        
+ | |__ _  _   / __| |_  _ _(_)___ | _ )                                       
+ | '_ \ || | | (__| ' \| '_| (_-< | _ \                                       
+ |_.__/\_, |  \___|_||_|_| |_/__/ |___/                                       
+       |__/      \
+"""
+
+
+#clear text output
+try:
+    from sys import modules
+    if 'idlelib.run' in modules: raise InIdle
+    from os import system
+    def clear():
+        system("cls")
+        print(asciiart)
+except (ImportError, InIdle):
+    #failed import of system. security measure?
+    clear = lambda : None
+
 options = """\
 What do you want to do?
  1) Check Password
@@ -92,15 +123,19 @@ What do you want to do?
  3) Quit\
 """
 leave = False
+print(asciiart)
 while not leave:
     print(options)
     option = input("#")
     if option == "1":
+        clear()
         checkPassword()
     elif option == "2":
+        clear()
         generatePassword()
     elif option == "3":
         print("Exiting")
         leave = True
     else:
-        print("Invalid choice. Please select again.")
+        clear()
+        print("Invalid choice. Please select again.\n")
