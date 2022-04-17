@@ -1,2 +1,2 @@
 ## Password Checker
-CS GCSE Practice Project - It's just something to put on my GitHub even if it is easy.
+GCSE CS Practice Project - Early example of writing a simple program to a strict specification. 
